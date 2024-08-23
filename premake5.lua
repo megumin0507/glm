@@ -2,6 +2,8 @@ project "glm"
     location "%{wks.location}/Engine/Libraries/glm"
     kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "On"
 
     targetdir ("%{wks.location}/Binaries/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/Intermediate/" .. outputdir .. "/%{prj.name}")
@@ -19,7 +21,11 @@ project "glm"
 
     filter "system:windows"
         systemversion "latest"
-        staticruntime "On"
 
-    filter { "system:windows", "configurations:Release" }
-        buildoptions "/MT"
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "On"
+
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "On"
